@@ -2,10 +2,10 @@
 
 You need to use <View> tags instead of divs to wrap up code. Views get compiled to native views (native ios, native android) but your JavaScript code is going through on via a JS core virtual machine instead.
 
-There is no css in react native! The styling language used in react native is similar to css but it uses javascript stylesheet objects.
+There is no css in react native! The styling language used in react native is similar to css but uses javascript stylesheet objects.
 When initializing the app you can press a to start the android emulator
 
-instead of calling a function as goalInputHandler() from within jsx, you only want it to get called when the element is modified, and that's why you call it as goalInputHandler without parenthesis.
+Instead of calling a function as goalInputHandler() from within jsx, you only want it to get called when the element is modified, and that's why you call it as goalInputHandler without parenthesis.
 Onchange on your element will call the function to change the text, but you always need to set the value to the defined state in order to bind the state to the function call.
 
 2 options to set state on the goals array:
