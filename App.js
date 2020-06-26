@@ -8,35 +8,50 @@ import {
   FlatList,
 } from "react-native";
 
-import GoalItem from './components/Goalitem';
-import GoalInput from './components/Goalinput';
+import GoalItem from "./components/Goalitem";
+import GoalInput from "./components/Goalinput";
 
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
+  const [isAddMode, setIsAddMode] = useState(false);
 
-  const addGoalHandler = goalTitle => {
-    setCourseGoals((currentGoals) => [...currentGoals, { key: Math.random().toString(), value: goalTitle}]);
+  const addGoalHandler = (goalText) => {
+    setCourseGoals((currentGoals) => [
+      ...currentGoals,
+      { key: Math.random().toString(), value: goalText },
+    ]);
+    setIsAddMode(false);
   };
-  const removeGoalHandler = goalID => {
-    setCourseGoals(currentGoals => {
-      return currentGoals.filter(goal => goal.id !== goalID);
+
+  const removeGoalHandler = (goalId) => {
+    setCourseGoals((currentGoals) => {
+      return currentGoals.filter((goal) => goal.id !== goalId);
     });
-  }
+  };
+
+  const cancelAddGoalHandler = () => {
+    setIsAddMode(false);
+  };
 
   return (
     <View style={styles.screen}>
-      <GoalInput onAddGoal={addGoalHandler} />
+      <Button title="Add new Goal" onPress={() => setIsAddMode(true)} />
+      <GoalInput
+        visible={isAddMode}
+        onAddGoal={addGoalHandler}
+        onCancel={cancelAddGoalHandler}
+      />
       <FlatList
         keyExtractor={(item, index) => item.id}
         data={courseGoals}
-        renderItem={ itemData => (
-          <GoalItem 
-            id={itemData.item.id} 
-            onDelete={removeGoalHandler} 
+        renderItem={(itemData) => (
+          <GoalItem
+            id={itemData.item.id}
+            onDelete={removeGoalHandler}
             title={itemData.item.value}
-          /> )}
-        
-        />
+          />
+        )}
+      />
     </View>
   );
 }
@@ -44,5 +59,5 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     padding: 40,
-  }
+  },
 });
